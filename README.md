@@ -43,4 +43,4 @@
 
 ## ライセンス
 
-このリポジトリ自体は社内検証用のため、公開予定はありません。
+`@soichiro_nitta/motion` と同じく ISC License を採用しています。詳細は [LICENSE](https://github.com/soichiro-nitta/motion/blob/master/LICENSE) を参照してください。
