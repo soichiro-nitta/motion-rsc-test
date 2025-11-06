@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@soichiro_nitta/motion':
+        specifier: file:../motion/soichiro_nitta-motion-4.1.11.tgz
+        version: file:../motion/soichiro_nitta-motion-4.1.11.tgz
       next:
         specifier: 16.0.1
         version: 16.0.1(@babel/core@7.28.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -396,6 +399,10 @@ packages:
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
+
+  '@soichiro_nitta/motion@file:../motion/soichiro_nitta-motion-4.1.11.tgz':
+    resolution: {integrity: sha512-dwO3pHRFO2nrnYKOjzhBXLA22vYDBaotj4ysvcQ2G+eNqdDtmOAjE3+ynf7JYLimJS40lUMLw8Al2DYLKarNbw==, tarball: file:../motion/soichiro_nitta-motion-4.1.11.tgz}
+    version: 4.1.11
 
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
@@ -2237,6 +2244,8 @@ snapshots:
   '@nolyfill/is-core-module@1.0.39': {}
 
   '@rtsao/scc@1.1.0': {}
+
+  '@soichiro_nitta/motion@file:../motion/soichiro_nitta-motion-4.1.11.tgz': {}
 
   '@swc/helpers@0.5.15':
     dependencies:

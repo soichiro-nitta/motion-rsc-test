@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# motion-rsc-test
 
-## Getting Started
+`@soichiro_nitta/motion` を Next.js 16 + React 19 で検証するためのサンプルです。RSC からは `createId` を、Client Component からは `createMotion` / `useEffectAsync` を利用する最新構成を前提にしています。
 
-First, run the development server:
+## pnpm pack とは？
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+`pnpm pack` はローカルパッケージを npm へ公開する前段階で `.tgz` 形式のアーカイブに固めるコマンドです。生成されたアーカイブを `pnpm add <path-to-tgz>` でインストールすれば、npm へ publish しなくても他プロジェクトに取り込めます。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+このリポジトリでは、`@soichiro_nitta/motion` の変更を即座に検証するために `pnpm pack` で tarball を作り、`motion-rsc-test` へインストールする運用にしています。`link:` 依存だと Next.js (Turbopack) がシンボリックリンク越しに変更を拾えず、`Module not found` や export 差異が起こるため、この手順を推奨しています。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 反映手順
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **ライブラリ側で tarball を作成**
+   ```bash
+   cd /Users/soichiro/Work/motion
+   pnpm pack
+   ```
+   - `soichiro_nitta-motion-<version>.tgz` が生成されます（既存ファイルは手動で削除してください）。
+2. **テストプロジェクトへ再インストール**
+   ```bash
+   cd /Users/soichiro/Work/motion-rsc-test
+   pnpm add ../motion/soichiro_nitta-motion-4.1.11.tgz --force
+   ```
+   - `--force` を付けると既存の依存を上書きできます。バージョン番号を変更した場合はファイル名も合わせてください。
+3. **サーバー再起動**
+   ```bash
+   pnpm dev --hostname 127.0.0.1 --port 3000
+   ```
+   - 以前の dev サーバーが残っていると `.next/dev/lock` が残るので、必要なら `.next` を削除してから再起動してください。
 
-## Learn More
+## プロジェクト構成メモ
 
-To learn more about Next.js, take a look at the following resources:
+- `app/id.ts` … RSC で `createId(['BOX', 'TITLE'])` を実行し、`id` 属性用の `N` を提供。
+- `app/motion.ts` … Client Component 専用モジュール。`createMotion(ID)` で `motion` API と型補完されたターゲットを取得。
+- `app/_Client/_MotionDemo.tsx` … `useEffectAsync` を使って `await motion.to('BOX', …)` のように直感的にアニメーションを記述。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## よくあるエラー
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| 症状 | 原因 | 対処 |
+| --- | --- | --- |
+| `useEffectAsync is not a function` | 古い tarball を参照している | 上記手順で `pnpm pack` → `pnpm add ...tgz` をやり直す |
+| `Module not found: Can't resolve '@soichiro_nitta/motion'` | `link:` 依存のまま or tarball 削除済み | Tarball を再生成し `pnpm add` する |
 
-## Deploy on Vercel
+## ライセンス
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+このリポジトリ自体は社内検証用のため、公開予定はありません。
