@@ -1,6 +1,6 @@
 # motion-rsc-test
 
-`@soichiro_nitta/motion` を Next.js 16 + React 19 で検証するためのサンプルです。RSC からは `createId` を、Client Component からは `createMotion` / `useEffectAsync` を利用する最新構成を前提にしています。
+[`@soichiro_nitta/motion`](https://github.com/soichiro-nitta/motion) を Next.js 16 + React 19 で検証するためのサンプルです。RSC からは `createId` を、Client Component からは `createMotion` / `useEffectAsync` を利用する最新構成を前提にしています。
 
 ## pnpm pack とは？
 
